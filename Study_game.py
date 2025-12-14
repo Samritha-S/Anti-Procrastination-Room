@@ -44,6 +44,22 @@ task_list.pack(pady=10) #10px of vertical padding
 add_button = tk.Button(root, text="Add Task", font=("Comic Sans MS", 12), fg="#ff4da6", bg="#330033", activeforeground="#0a0013", activebackground="#ff4da6", command=add_task) #This is the Add Task Button
 add_button.pack(pady = 5) #5px of vertical padding
 
+task_meter = 0 #keeps track of completed tasks
+
+def completed_task():
+    global task_meter
+    try:
+        selected_index=  task_list.curselection()[0] #Get the index of the selected task
+        task_text = task_list.get(selected_index) #Get the text of the selected task
+        task_list.delete(selected_index) #Remove the task from the Listbox
+        task_list.itemconfig(selected_index, fg="#888888", font=("Kristen ITC", 14, "overstrike")) #Strike through the completed task
+        task_meter += 1 #Increase the task meter by 1
+        task_meter_label.config(text=f"Task Meter: {task_meter}") #Update the Task Meter Label
+    except IndexError:
+        pass  #If no task is selected, do nothing
+complete_button = tk.Button(root, text="Complete Task", font=("Kristen ITC", 14, "bold"),fg="#ff4da6", bg="#330033", activeforeground="#0a0013", activebackground="#ff4da6", command=completed_task) #This is the Complete Task Button
+complete_button.pack(pady=5) #5px of vertical padding
+
 #Making the FLash Effect Function
 def flash_unlock(message):
     unlock_label.config(text=message, fg = "#ff4da6")
